@@ -26,7 +26,8 @@ const style = {
     alignItems: 'center'
   },
   labelStyle: {
-    flex: 1
+    flex: 1,
+    paddingLeft: 30
   },
   textInput: {
     flex: 2

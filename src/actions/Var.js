@@ -1,0 +1,15 @@
+export const EMAIL_CHANGED = 'emailChanged';
+export const PASSWORD_CHANGED = 'passwordChanged';
+export const LOGIN_USER = 'loginUser';
+export const LOGIN_USER_SUCCESS = 'loginUserSuccess';
+export const LOGIN_USER_FAIL = 'loginUserFail';
+export const LOGOUT_USER = 'logoutUser';
+export const START_FETCHING_MESSAGE = 'startFetchingMessage';
+export const LAST_FETCHED_MESSAGE = 'lastFetchedMessage';
+export const UPDATE_MESSAGE_HEIGHT = 'updateMessageHeight';
+export const ADD_MESSAGE = 'addMessage';
+export const SEND_MESSAGE = 'sendMessage';
+export const SET_USER_NAME = 'setUserName';
+export const SET_USER_AVATAR = 'setUserAvatar';
+export const USER_LOGGED_IN = 'userLoggedIn';
+export const USER_NOT_EXIST = 'userNotExist';

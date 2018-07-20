@@ -1,36 +1,89 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { NavigationBar, Title } from '@shoutem/ui';
-import { Input } from '../components';
+import { KeyboardAvoidingView, View, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { Button } from '@shoutem/ui';
+import * as actions from '../actions';
+import { Input, CardSection, Spinner } from '../components';
+
 
 class Login extends Component {
-  state = { email: '' };
 
-  onChangeText(email) {
-     this.setState(email);
+  onChangeEmail(email) {
+     this.props.emailChanged(email);
   }
+
+  onChangePassword(password) {
+    this.props.passwordChanged(password);
+  }
+
+  onButtonPress() {
+    const { email, password } = this.props;
+    this.props.loginUser({ email, password });
+  }
+
+  onLogin() {
+   const { loading } = this.props;
+   if (loading) {
+     return (
+          <Spinner />
+     );
+   }
+   return (
+     <Button onPress={this.onButtonPress.bind(this)} styleName="full-width" >
+       <Text>Login</Text>
+     </Button>
+   );
+  }
+
   render() {
     return (
-    <View style={style.container}>
-    <NavigationBar
-    centerComponent={<Title>Login Page</Title>}
-    />
+    <KeyboardAvoidingView
+     style={style.container}
+     behavior="padding" enabled
+    >
+    <View style={style.errorStyle}>
+    <Text style={{ color: 'red' }}>{this.props.error}</Text>
+    </View>
+    <CardSection>
     <Input
      label='Email'
      placeholder='Enter Email'
-     onChangeText={this.onChangeText}
-     value={this.state.email}
+     onChangeText={this.onChangeEmail.bind(this)}
+     value={this.props.email}
     />
-    </View>
+    </CardSection>
+    <CardSection>
+    <Input
+     secureTextEntry
+     label='Password'
+     placeholder='Enter Password'
+     onChangeText={this.onChangePassword.bind(this)}
+     value={this.props.password}
+    />
+    </CardSection>
+    <CardSection>
+    {this.onLogin()}
+    </CardSection>
+    </KeyboardAvoidingView >
     );
   }
 }
 
 const style = {
 container: {
-  flex: 1
+  paddingLeft: 10,
+  paddingRight: 10,
+  paddingBottom: 20
+},
+errorStyle: {
+  alignItems: 'center',
+  marginBottom: 15
 }
 };
 
+const mapStateToProps = ({ Auth }) => {
+  const { email, password, loading, error } = Auth;
+ return { email, password, loading, error };
+};
 
-export { Login };
+export default connect(mapStateToProps, actions)(Login);
